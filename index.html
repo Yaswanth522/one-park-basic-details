@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mr Appliance</title>
+    <style>
+      /* Body styling */
+      body {
+        background: #fff;
+        color: #fff;
+        font-family: Verdana;
+        text-align: left;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        min-height: 100vh; /* Minimum height to fill viewport */
+        flex-direction: column; /* Added to make header and form appear on top of each other */
+      }
+      /* Header styling */
+      header {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #333;
+        color: #00f; /* Blue color */
+        width: 100%;
+      }
+      /* Form styling */
+      form {
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 200px; /* Width of the form */
+        height: 300px; /* Height of the form */
+        margin: 20px; /* Margin around the form */
+        padding: 30px 20px; /* Padding inside the form */
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        align-self: flex-start;
+      }
+      /* Form control styling */
+      .form-control {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      /* Input styling */
+      .form-control input,
+      .form-control select {
+        border: 1px solid #000;
+        border-radius: 5px;
+        font-family: inherit;
+        padding: 10px; /* Padding inside input fields */
+        display: block;
+        width: calc(
+          100% - 20px
+        ); /* Full width input fields with adjusted padding */
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #333;
+        font-size: 10px;
+      }
+      /* Button styling */
+
+      button {
+        background-color: #ce360b;
+        border: 1px solid #ce360b;
+        border-radius: 30px;
+        font-family: inherit;
+        font-size: 11px;
+        display: block;
+        width: 50%;
+        margin-top: 9px;
+        margin-bottom: 20px;
+        margin-left: 25%;
+        color: #fff;
+        padding: 10px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #142651;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form">
+      <div class="form-control">
+        <input type="text" id="full-name" name="full-name" value="Jason"/>
+      </div>
+      <div class="form-control">
+        <input type="email" id="email" name="email" value="jason@gmail.com"/>
+      </div>
+      <div class="form-control">
+        <input type="tel" id="phone" name="phone" value="+14089257016"/>
+      </div>
+
+      <div class="form-control">
+        <input type="text" id="company-name" name="company-name" value="Yellow.ai"/>
+      </div>
+      <div class="form-control">
+        <select
+          value="Healthcare"
+          class="form-inputs"
+          aria-valuetext="Restaurant"
+          required
+        >
+          <option value="Restaurant">Restaurant</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Construction">Construction</option>
+          <option value="Hospitality">Hospitality</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      <button type="button" id="submit-btn">Submit</button>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(function () {
+        $("#submit-btn").click(function () {
+          // Retrieve form data
+
+          var firstname = $("#full-name").val();
+          var mobile = $("#phone").val();
+          var email = $("#email").val();
+          var conpany = $("#company-name").val();
+          // Send form data via postMessage
+          window.parent.postMessage(
+            JSON.stringify({
+              event_code: "ym-client-event",
+              data: JSON.stringify({
+                event: {
+                  code: "userdetails",
+                  data: {
+                    firstname: $("#first-name").val(),
+                    lastname: $("#last-name").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                  },
+                },
+              }),
+            }),
+            "*"
+          );
+          // Fade out the form and append thank you message
+          $(this).fadeOut("slow", function () {
+            var message =
+              "<div class='submission-message'>Thank you for your submission!</div>";
+            $(this).parent().append(message);
+            $(".submission-message").css({
+              color: "black",
+              "text-align": "center",
+              "margin-top": "20px", // Adjust as needed
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
